@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<!-- saved from url=(0053)https://service.iamport.kr/payments/ready/imp46916253 -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no">
+		<title>
+		Payments	</title>
+	<script type="text/javascript" src="./json3.min.js"></script><script type="text/javascript" src="./jquery-1.10.2.min.js"></script><script type="text/javascript" src="./INIStdPay.js" charset="UTF-8"></script><script type="text/javascript" src="./prepare.filter.min.js" charset="UTF-8"></script></head>
+<body style="">
+	<div id="container">
+		<div id="header">
+		</div>
+		<div id="content">
+
+			
+			<script type="text/javascript">
+	function _response(action, data, source, origin) {
+		var msg = {
+			action: action,
+			data: data
+		};
+		var obj = JSON.stringify(msg); //받는 쪽에서 parse하므로 string이라도 stringify해서 넘김
+
+		source.postMessage(obj, '*');
+	}
+
+	(function (window) {
+		var document = window.document;
+
+		function removeElement(arr, elem) {
+			for (var i = arr.length - 1; i >= 0; i--) {
+				if (arr[i] == elem) {
+					arr.splice(i, 1);
+
+					return arr;
+				}
+			}
+			;
+
+			return arr;
+		}
+
+		function bypassAcceptmethod(bypass) {
+			var accepted = ["below1000", "popreturn", "va_receipt"]; //IMPORTANT : popreturn 옵션을 주면 iframe내에서 redirect되고, 그 외에는 _top을 redirect시켜버린다. 때문에 iframe결제 방식에서 필수
+
+			if (bypass && typeof bypass.acceptmethod == "string") {
+				var tokens = bypass.acceptmethod.split(":");
+				var regexes = [new RegExp("^SKIN\\(.*?\\)$", "i"), new RegExp("^cardshowopt\\(.*?\\)$", "i"), new RegExp("^CARDPOINT$"), new RegExp("no_receipt"), new RegExp("^\-\-va_receipt$"), new RegExp("disablepoint"), new RegExp("usespcp"), new RegExp("^cd_ps\\(.*?\\)$", "i"), new RegExp("noeasypay")];
+
+
+				for (var k = tokens.length - 1; k >= 0; k--) {
+
+					for (var i = regexes.length - 1; i >= 0; i--) {
+						var regex = regexes[i];
+						var match = tokens[k].match(regex)
+
+						if (match) {
+							if (match[0].indexOf('--') == 0) { //exclude
+								removeElement(accepted, match[0].substr(2));
+							} else {
+								accepted.push(match[0]);
+							}
+							break;
+						}
+					}
+					;
+
+				}
+				;
+			}
+
+			return accepted;
+		}
+
+		function _bypass(frm, bypass) {
+			if (!bypass) return;
+
+			var words = ["ini_PAYSHOT_KEY"];
+			for (var i = words.length - 1; i >= 0; i--) {
+				var key = words[i];
+
+				if (typeof bypass[key] != "undefined" && typeof frm[key] != "undefined") frm[key].value = bypass[key];
+			}
+			;
+		}
+
+		function pay() {
+			INIStdPay.pay('StdForm');
+		}
+
+		function _pay_method(method) {
+			switch (method) {
+				case 'card' : //신용카드
+					return 'Card';
+
+				case 'samsung' : //삼성페이
+					return 'onlyssp';
+
+				case 'kakaopay' : //카카오페이
+					return 'onlykakaopay';
+
+				case 'payco' : //PAYCO
+					return 'onlypayco';
+
+				case 'lpay' : //L페이
+					return 'onlylpay';
+
+				case 'ssgpay' : //SSG페이
+					return 'onlyssgcard';
+
+				case 'tosspay' : //토스페이
+					return 'onlytosspay';
+
+				case 'trans' : //실시간계좌이체
+					return 'DirectBank';
+
+				case 'vbank' : //가상계좌
+					return 'VBank';
+
+				case 'phone' : //휴대폰 소액결제
+					return 'HPP';
+
+				case 'kpay' : //Kpay
+					return 'Kpay';
+
+				case 'cultureland' : //문화상품권
+					return 'Culture';
+
+				case 'smartculture' : //스마트문상
+					return 'DGCL';
+
+				case 'happymoney' : //해피머니
+					return 'HPMN';
+
+				case 'booknlife' : //도서문화상품권(북앤라이프)
+					return 'Bcsh';
+
+				case 'naverpay' : //네이버페이
+					return 'onlynaverpay';
+
+				case 'chai' : //차이페이
+					return 'onlychaipay';
+			}
+
+			return 'Card';
+		}
+
+		function _direct_option(bypass) {
+			var ops = bypassAcceptmethod(bypass);
+			ops.push("cardonly");
+
+			return ops.join(":");
+		}
+
+		function _pay_option(option, bypass) {
+			var ops = bypassAcceptmethod(bypass);
+
+			if (option.pay_method === 'samsung' || option.pay_method === 'payco' || option.pay_method === 'kakaopay' || option.pay_method === 'lpay' || option.pay_method === 'ssgpay' || option.pay_method === 'tosspay' || option.pay_method === 'naverpay' || option.pay_method === 'chai') {
+				ops.push("cardonly");
+
+				//[2020-02-13] 간편결제일 때 ini_onlycardcode 는 허용되는 것으로 확인 됨
+				if (option.enabled_card_list) {
+					ops.push('ini_onlycardcode(' + option.enabled_card_list + ')');
+				}
+
+				return ops.join(":"); //아래 옵션 모두 무시
+			}
+
+			if (option.customer_uid) {
+				ops.push("BILLAUTH(card)");
+
+				return ops.join(":"); //아래 옵션 모두 무시
+			}
+
+			if (option.digital === true) {
+				ops.push('HPP(1)');
+			} else {
+				ops.push('HPP(2)');
+			}
+
+			if (option.vbank_due) {
+				var due = (option.vbank_due + '').replace(/\D/g, '');
+
+				if (due.length >= 8) {
+					var dt = due.substr(0, 8);
+					var hhmm = due.substr(8, 4);
+					if (hhmm) { //zero fill
+						hhmm = hhmm + '0000'.substr(0, 4 - hhmm.length);
+					}
+
+					ops.push('vbank(' + dt + hhmm + ')');
+				}
+			}
+
+			if (option.escrow) {
+				ops.push('useescrow');
+			}
+
+			if (option.enabled_card_list) {
+				ops.push('ini_onlycardcode(' + option.enabled_card_list + ')');
+			}
+
+			return ops.join(":");
+		}
+
+		function _filter_tel(tel) {
+			return (tel + "").replace(/[^0-9]/g, ''); //KG이니시스 정책상 숫자와 -기호만 허용됨(웹표준 결제창) - 숫자만 허용하자
+		}
+
+		function _options(data) {
+			if (data.language == 'en') {
+				return 'en';
+			}
+
+			return 'ko';
+		}
+
+		function _offerPeriod(period) {
+			switch (period.interval) {
+				case "month" :
+					return "M2";
+
+				case "year" :
+					return "Y2";
+
+				default :
+					if (period.from && period.to) return period.from + "-" + period.to;
+			}
+
+			return "";
+		}
+
+		function isDirectCall(request) {
+			return request.card && request.card.direct && request.card.direct.code;
+		}
+
+		function getDirectQuota(request) {
+			if (!isDirectCall(request)) {
+				return 0;
+			}
+
+			var quota = request.card.direct.quota ? parseInt(request.card.direct.quota) : 0;
+			if ( request.amount < 50000 || isNaN(quota) ) quota = 0;
+
+			return quota;
+		}
+
+		function getDirectCardInfo(request) {
+			if (!isDirectCall(request)) {
+				return {
+					code : '',
+					isp : false
+				};
+			}
+
+			var standardCode = String(request.card.direct.code);
+
+			switch(standardCode) {
+				case '368': //롯데카드
+					return {
+						code : '03',
+						isp : false
+					};
+
+				case '367': //현대카드
+					return {
+						code : '04',
+						isp: false
+					};
+
+				case '381': //KB카드
+					return {
+						code : '06',
+						isp : true
+					};
+
+				case '361': //BC카드
+					return {
+						code : '11',
+						isp : true
+					};
+
+				case '364': //광주카드(ISP인증)
+					return {
+						code : '32',
+						isp : true
+					};
+
+				case '365': //삼성카드
+					return {
+						code : '12',
+						isp : false
+					};
+
+				case '366': //신한카드
+					return {
+						code : '14',
+						isp : false
+					};
+
+				case '374': //하나카드
+					return {
+						code : '34',
+						isp : false
+					};
+
+				case '371': //NH카드
+					return {
+						code : '41',
+						isp : false
+					};
+
+				case '370': //씨티카드
+					return {
+						code : '43',
+						isp : false
+					};
+
+				case '372': //전북카드(ISP)
+					return {
+						code : '33',
+						isp : true
+					};
+
+				case '373': //제주카드(ISP)
+					return {
+						code : '52',
+						isp : true
+					};
+
+				case '002': //KDB산업은행카드(ISP)
+					return {
+						code : '35',
+						isp : true
+					};
+
+				case '041': //우리카드
+					return {
+						code : '38',
+						isp : true
+					};
+
+				case '045': //새마을금고카드(ISP)
+					return {
+						code : '54',
+						isp : true
+					};
+
+				case '048': //신협카드(ISP)
+					return {
+						code : '48',
+						isp : true
+					};
+
+				case '369': //수협카드(ISP)
+					return {
+						code : '51',
+						isp : true
+					};
+
+				case '089': //케이뱅크카드(ISP)
+					return {
+						code : '55',
+						isp : true
+					};
+
+				case '090': //카카오뱅크카드
+					return {
+						code : '56',
+						isp : true
+					};
+
+				case '071': //우체국카드(ISP)
+					return {
+						code : '71',
+						isp : true
+					};
+			}
+
+			return {
+				code : '',
+				isp : false
+			};
+		}
+
+		function on_message(e) {
+			var obj = {},
+				action = null,
+				data = null,
+				request_id = null;
+			var source = e.source;
+			var origin = e.origin;
+
+			try {
+				obj = JSON.parse(e.data);
+				action = obj.action;
+				data = obj.data || {};
+				request_id = data.request_id;
+				origin = obj.origin || origin;
+			} catch (e) {
+			}
+
+			if (action == 'payment') {
+				var custom_data = JSON.stringify(data.custom_data);
+
+				$.ajax({
+					type: 'POST',
+					url: '/html5_inicis_payments/prepare.json',
+					dataType: 'json',
+					data: {
+						channel: 'pc',
+						provider: 'html5_inicis',
+						pay_method: data.pay_method, //service DB에는 원본
+						escrow: data.escrow,
+						amount: data.amount,
+						currency: data.currency,
+						vat: data.vat,
+						tax_free: data.tax_free,
+						name: data.name,
+						merchant_uid: data.merchant_uid,
+						user_code: 'imp46916253',
+						tier_code: data.tier_code,
+						pg_id: 'MOIcoffee2',
+						buyer_name: data.buyer_name,
+						buyer_email: data.buyer_email,
+						buyer_tel: data.buyer_tel,
+						buyer_addr: data.buyer_addr,
+						buyer_postcode: data.buyer_postcode,
+						customer_uid: data.customer_uid,
+						origin: origin,
+						custom_data: custom_data,
+						notice_url: data.notice_url,
+						confirm_url : data.confirm_url,
+						vbank_due: data.vbank_due,
+						card: data.card,
+						display: IMP.mask_display(data.display)
+					},
+					error: function (xhr, status, err) {
+						return _response('', {
+							success: false,
+							request_id: request_id,
+							imp_uid: null,
+							merchant_uid: data.merchant_uid,
+							error_code: 'HTTP_ERROR:' + xhr.status,
+							error_msg: '결제 시작을 위해 서버와 통신하는 중 에러가 발생하였습니다'
+						}, source, origin);
+					}
+				}).done(function (rsp) {
+					if (rsp.code == 0) {
+						//common
+						var frm = document.forms["StdForm"];
+						frm.elements['imp_uid'].value = rsp.data.imp_uid;
+						frm.elements['request_id'].value = request_id;
+						frm.elements['merchantData'].value = 'imp_uid=' + rsp.data.imp_uid + '&request_id=' + request_id + '&user_code=imp46916253';
+						if (data.customer_uid) frm.elements['merchantData'].value += ('&customer_uid=' + data.customer_uid);
+
+						//
+						frm.elements['mid'].value = rsp.data.pg_id;
+						frm.elements['goodname'].value = data.name;
+						frm.elements['oid'].value = rsp.data.use_self_oid ? data.merchant_uid : rsp.data.imp_uid;
+						frm.elements['price'].value = data.amount;
+
+						if (typeof data.tax_free == 'number') {
+							frm.elements['tax'].value = Math.round(Math.max(data.amount - data.tax_free, 0) / 11); //정부에서는 부가세액에 대해 반올림 권장
+							frm.elements['taxfree'].value = data.tax_free;
+						} else if (typeof data.vat == 'number') { //LEGACY : [2017-07-24] amount & vat 조합만으로는 정확한 복합과세금액을 산출하기 어렵다. amount & tax_free조합이어야 가능
+							frm.elements['tax'].value = data.vat;
+							frm.elements['taxfree'].value = Math.max(0, data.amount - 11 * data.vat); //1원 차이가 날 수 있음
+						}
+
+						var _tel = _filter_tel(data.buyer_tel);
+						if (_tel.length == 0) _tel = "01012341234";
+
+						frm.elements['buyername'].value = data.buyer_name;
+						frm.elements['buyertel'].value = _tel;
+						frm.elements['Ini_SSGPAY_MDN'].value = _tel;
+						frm.elements['buyeremail'].value = data.buyer_email;
+						frm.elements['timestamp'].value = rsp.data.timestamp;
+						frm.elements['signature'].value = rsp.data.signature;
+						frm.elements['returnUrl'].value = 'https://service.iamport.kr/html5_inicis_payments/result';
+						frm.elements['mKey'].value = rsp.data.mKey;
+
+						if (isDirectCall(data)) {
+							var directCardInfo = getDirectCardInfo(data);
+							frm.elements['ini_cardcode'].value = directCardInfo.code;
+							frm.elements['gopaymethod'].value = directCardInfo.isp ? 'onlyisp' : 'onlyacard';
+
+							frm.elements['acceptmethod'].value = _direct_option(data.bypass);
+							frm.elements['ansim_quota'].value = getDirectQuota(data);
+						} else {
+							frm.elements['gopaymethod'].value = _pay_method(data.pay_method);
+							frm.elements['acceptmethod'].value = _pay_option({
+								pay_method: data.pay_method,
+								vbank_due: data.vbank_due,
+								digital: data.digital,
+								escrow: data.escrow,
+								enabled_card_list: rsp.data.enabled_card_list,
+								customer_uid: data.customer_uid
+							}, data.bypass);
+						}
+
+						frm.elements['closeUrl'].value = 'https://service.iamport.kr/html5_inicis_payments/close?imp_uid=' + rsp.data.imp_uid + '&request_id=' + request_id + '&user_code=imp46916253';
+
+						//appendix
+						if (rsp.data.use_interest_free) frm.elements['nointerest'].value = rsp.data.interest_free;
+						frm.elements['quotabase'].value = rsp.data.card_quota_list;
+
+						//currency
+						if (typeof data.currency == "string" && data.currency.toUpperCase() == "USD") {
+							frm.elements['price'].value = Math.round(data.amount * 100); //서버에서도 소수 2자리 이하는 round처리
+							frm.elements['currency'].value = "USD";
+						}
+
+						//서비스 제공기한
+						if (data.period) {
+							frm.elements['offerPeriod'].value = _offerPeriod(data.period);
+						}
+
+						//가맹점 커스텀 하드코딩
+						if (rsp.data.pg_id === 'MOIfindtal' || rsp.data.pg_id === 'MOIopenurm' || rsp.data.pg_id === 'MOIcskspor' || rsp.data.pg_id === 'MOIepcompa' || rsp.data.pg_id === 'MOIwordpie' || rsp.data.pg_id === 'MOIplussta' || rsp.data.pg_id === 'MOIiammuse' || rsp.data.pg_id === 'MOIbd25cok' || rsp.data.pg_id === 'MOImeedam1' || rsp.data.pg_id === 'MOIloyqu01') {
+							frm.elements['quotabase'].value = "02:03";
+						}
+
+						frm.elements['languageView'].value = _options(data);
+
+						//bypass 처리
+						_bypass(frm, data.bypass);
+
+						pay();
+					} else {
+						_response('', {
+							success: false,
+							request_id: request_id,
+							imp_uid: rsp.data.imp_uid,
+							merchant_uid: data.merchant_uid,
+							error_code: rsp.data.error_code,
+							error_msg: rsp.data.error_msg
+						}, source, origin);
+					}
+				});
+			}
+		}
+
+		if (window.addEventListener) {  // all browsers except IE before version 9
+			window.addEventListener("message", on_message, false);
+		} else {
+			if (window.attachEvent) {   // IE before version 9
+				window.attachEvent("onmessage", on_message);
+			}
+		}
+	}).call({}, window);
+</script>
+<form method="POST" name="StdForm" id="StdForm">
+	<input type="hidden" name="version" value="1.0">
+	<input type="hidden" name="mid" value="">
+	<input type="hidden" name="goodname" value="">
+	<input type="hidden" name="oid" value="">
+	<input type="hidden" name="price" value="">
+	<input type="hidden" name="tax" value="">
+	<input type="hidden" name="taxfree" value="">
+	<input type="hidden" name="currency" value="WON">
+	<input type="hidden" name="buyername" value="">
+	<input type="hidden" name="buyertel" value="">
+	<input type="hidden" name="buyeremail" value="">
+	<input type="hidden" name="timestamp" value="">
+	<input type="hidden" name="signature" value="">
+	<input type="hidden" name="returnUrl" value="">
+	<input type="hidden" name="mKey" value="">
+	<input type="hidden" name="gopaymethod" value="">
+	<input type="hidden" name="offerPeriod" value="">
+	<input type="hidden" name="languageView" value="ko">
+	<input type="hidden" name="charset" value="UTF-8">
+	<input type="hidden" name="payViewType" value="overlay"> <!-- overlay or popup -->
+	<input type="hidden" name="closeUrl" value="">
+	<input type="hidden" name="nointerest" value="">
+	<input type="hidden" name="quotabase" value="2:3:4:5:6:7:8:9:10:11:12">
+	<input type="hidden" name="vbankRegNo" value="">
+	<input type="hidden" name="merchantData" value="">
+	<input type="hidden" name="acceptmethod" value="popreturn:HPP(2)">
+	<!-- IMPORTANT : popreturn 옵션을 주면 iframe내에서 redirect되고, 그 외에는 _top을 redirect시켜버린다. 때문에 iframe결제 방식에서 필수 -->
+
+	<!-- 이니시스 커스텀 파라메터(가맹점 커스터마이즈) -->
+	<input type="hidden" name="ini_PAYSHOT_KEY" value="">
+	<input type="hidden" name="Ini_SSGPAY_MDN">
+
+	<!-- 신용카드 인증화면 직접 호출 -->
+	<input type="hidden" name="ini_cardcode">
+	<input type="hidden" name="ansim_quota">
+
+	<!-- 여기서부터 custom field(공통으로 모두 있어야 함) -->
+	<input type="hidden" name="imp_uid" value=""><!-- Payment.result()에서 공통화를 위해 imp_uid를 동일한 이름으로 한 번 더 받음 -->
+	<input type="hidden" name="request_id" value="">
+	<input type="hidden" name="user_code" value="imp46916253">
+</form>
+		</div>
+		<div id="footer">
+		</div>
+	</div>
+
+
+</body></html>
