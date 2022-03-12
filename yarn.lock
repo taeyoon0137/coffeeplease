@@ -399,6 +399,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@parcel/packager-raw-url@npm:2.3.2":
+  version: 2.3.2
+  resolution: "@parcel/packager-raw-url@npm:2.3.2"
+  dependencies:
+    "@parcel/plugin": 2.3.2
+    "@parcel/utils": 2.3.2
+  checksum: da14e24e86ced6773d544ab236dbbeae1c8323afbf0202d6c18388663a73cef7241d9d881c0fa81f57e2f5a4bb3aa4555b79742c32f5779a8b35e3ae71efa477
+  languageName: node
+  linkType: hard
+
 "@parcel/packager-raw@npm:2.3.2":
   version: 2.3.2
   resolution: "@parcel/packager-raw@npm:2.3.2"
@@ -664,6 +674,18 @@ __metadata:
     posthtml-render: ^3.0.0
     semver: ^5.7.1
   checksum: 6de3f7be314c6e685b2c9c56e8193cbbdb1ab40581be9dede30a4e9301596fb0349f70bb2cdcb75327da0d5e62ad789e3ce8ec067239b643f065d54d9286fade
+  languageName: node
+  linkType: hard
+
+"@parcel/transformer-webmanifest@npm:2.3.2":
+  version: 2.3.2
+  resolution: "@parcel/transformer-webmanifest@npm:2.3.2"
+  dependencies:
+    "@parcel/diagnostic": 2.3.2
+    "@parcel/plugin": 2.3.2
+    "@parcel/utils": 2.3.2
+    json-source-map: ^0.6.1
+  checksum: 4fe8287db0d114ad810a56ec9d5f12718b9d55054787d4c8d31652d0383306d6b0f3312e657999eec2568d255ee902ed67939c564d922db0477cf6e27e194084
   languageName: node
   linkType: hard
 
@@ -1007,6 +1029,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "coffeeplease@workspace:."
   dependencies:
+    "@parcel/packager-raw-url": 2.3.2
+    "@parcel/transformer-webmanifest": 2.3.2
     parcel: ^2.3.2
   languageName: unknown
   linkType: soft

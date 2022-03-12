@@ -162,6 +162,11 @@ section.intro .intro__title-container {
   max-width: var(--dimension-max-width);
   opacity: 0;
   transform: translateY(40px);
+  -webkit-transform: translateY(40px);
+
+  /* Safari Flickering */
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 }
 
 section.intro .intro__title {

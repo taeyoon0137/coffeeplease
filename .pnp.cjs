@@ -35,6 +35,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         [null, {
           "packageLocation": "./",
           "packageDependencies": [
+            ["@parcel/packager-raw-url", "npm:2.3.2"],
+            ["@parcel/transformer-webmanifest", "npm:2.3.2"],
             ["parcel", "npm:2.3.2"]
           ],
           "linkType": "SOFT",
@@ -577,6 +579,17 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD",
         }]
       ]],
+      ["@parcel/packager-raw-url", [
+        ["npm:2.3.2", {
+          "packageLocation": "./.yarn/cache/@parcel-packager-raw-url-npm-2.3.2-deb6892c9f-da14e24e86.zip/node_modules/@parcel/packager-raw-url/",
+          "packageDependencies": [
+            ["@parcel/packager-raw-url", "npm:2.3.2"],
+            ["@parcel/plugin", "npm:2.3.2"],
+            ["@parcel/utils", "npm:2.3.2"]
+          ],
+          "linkType": "HARD",
+        }]
+      ]],
       ["@parcel/packager-svg", [
         ["npm:2.3.2", {
           "packageLocation": "./.yarn/cache/@parcel-packager-svg-npm-2.3.2-c6e9dc96b5-96c55fde2e.zip/node_modules/@parcel/packager-svg/",
@@ -853,6 +866,19 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["posthtml-parser", "npm:0.10.2"],
             ["posthtml-render", "npm:3.0.0"],
             ["semver", "npm:5.7.1"]
+          ],
+          "linkType": "HARD",
+        }]
+      ]],
+      ["@parcel/transformer-webmanifest", [
+        ["npm:2.3.2", {
+          "packageLocation": "./.yarn/cache/@parcel-transformer-webmanifest-npm-2.3.2-1b197995cd-4fe8287db0.zip/node_modules/@parcel/transformer-webmanifest/",
+          "packageDependencies": [
+            ["@parcel/transformer-webmanifest", "npm:2.3.2"],
+            ["@parcel/diagnostic", "npm:2.3.2"],
+            ["@parcel/plugin", "npm:2.3.2"],
+            ["@parcel/utils", "npm:2.3.2"],
+            ["json-source-map", "npm:0.6.1"]
           ],
           "linkType": "HARD",
         }]
@@ -1273,6 +1299,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./",
           "packageDependencies": [
             ["coffeeplease", "workspace:."],
+            ["@parcel/packager-raw-url", "npm:2.3.2"],
+            ["@parcel/transformer-webmanifest", "npm:2.3.2"],
             ["parcel", "npm:2.3.2"]
           ],
           "linkType": "SOFT",
