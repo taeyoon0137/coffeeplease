@@ -113,16 +113,16 @@
   div.mobile-cta {
     display: flex;
     position: fixed;
-    top: 100vh;
     left: 0vh;
     right: 0vh;
+    bottom: calc(-56px - var(--dimension-bottom));
     padding-bottom: var(--dimension-bottom);
     background: var(--color-primary);
-    /* transition: top 0.5s; */
+    transition: bottom 0.5s;
   }
 
   div.mobile-cta.--active {
-    transform: translateY(56px) translateY(var(--dimension-bottom));
+    bottom: 0px;
   }
 
   div.mobile-cta .mobile-cta--button {
