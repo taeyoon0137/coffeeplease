@@ -118,11 +118,11 @@
     right: 0vh;
     padding-bottom: var(--dimension-bottom);
     background: var(--color-primary);
-    transition: top 0.5s;
+    /* transition: top 0.5s; */
   }
 
   div.mobile-cta.--active {
-    top: calc(100vh - (56px + var(--dimension-bottom)));
+    transform: translateY(56px) translateY(var(--dimension-bottom));
   }
 
   div.mobile-cta .mobile-cta--button {
