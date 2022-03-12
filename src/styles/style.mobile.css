@@ -42,14 +42,6 @@
     transition: unset;
   }
 
-  section.intro {
-    opacity: 1 !important;
-  }
-
-  section.intro .intro__scroll-indicator {
-    opacity: 1 !important;
-  }
-
   section.intro .intro__scroll-indicator {
     position: sticky;
     bottom: 16px;
