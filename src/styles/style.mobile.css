@@ -20,7 +20,6 @@
   /* Intro */
 
   section.intro .intro__background-container {
-    top: unset;
     bottom: 80px;
   }
 
@@ -83,6 +82,12 @@
   section.products .products__item-info-detail {
     margin-top: 12px;
     font-size: 14px;
+  }
+
+  section.products .products__item-image-container {
+    flex: 0;
+    width: 100%;
+    padding-top: 100%;
   }
 
   /* Outro */
