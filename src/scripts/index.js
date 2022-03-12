@@ -10,16 +10,12 @@ window.addEventListener('scroll', (event) => {
   // hero image
   const intro = document.getElementById('intro');
 
-  // if (scrollY < window.innerHeight / 2) {
-  //   intro.style.opacity = 1;
-  // }
-
-  if (scrollY >= window.innerHeight / 2) {
-    intro.style.opacity = 1 - (scrollY - window.innerHeight / 2) / (window.innerHeight / 2);
-  }
-
-  if (1 - (scrollY - window.innerHeight / 2) / (window.innerHeight / 2) <= 0) {
+  if (scrollY >= 0) {
+    intro.style.opacity = 1 - scrollY / window.innerHeight;
+  } else if (scrollY / window.innerHeight >= 1) {
     intro.style.opacity = 0;
+  } else {
+    intro.style.opacity = 1;
   }
 
   // scroll-indicator disable
