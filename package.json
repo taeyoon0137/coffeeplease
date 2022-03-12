@@ -3,7 +3,7 @@
   "packageManager": "yarn@3.1.0",
   "scripts": {
     "start": "parcel src/index.html",
-    "build": "parcel build src/index.html"
+    "build": "parcel build src/index.html --dist-dir docs"
   },
   "devDependencies": {
     "parcel": "^2.3.2"

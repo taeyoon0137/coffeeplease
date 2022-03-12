@@ -9,5 +9,4 @@
 !/.yarn/cache
 #/.pnp.*
 
-dist/
 .parcel-cache/
