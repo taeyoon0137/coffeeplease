@@ -3,7 +3,9 @@
   "packageManager": "yarn@3.1.0",
   "scripts": {
     "start": "parcel src/index.html",
-    "build": "parcel build src/index.html --dist-dir docs"
+    "build": "yarn build:production && yarn script:localize",
+    "build:production": "parcel build src/index.html --dist-dir docs",
+    "script:localize": "yarn node ./scripts/localize.js"
   },
   "devDependencies": {
     "parcel": "^2.3.2"
