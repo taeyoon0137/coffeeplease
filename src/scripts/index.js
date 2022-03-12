@@ -48,4 +48,15 @@ window.addEventListener('scroll', (event) => {
       item.classList.remove('--active');
     }
   }
+
+  // mobile active button
+  const mobileCTA = document.getElementById('mobile-cta');
+  const introCTAPos = document.getElementById('intro-cta').getBoundingClientRect();
+  const outroCTAPos = document.getElementById('outro-cta').getBoundingClientRect();
+
+  if (introCTAPos.top <= 0 && outroCTAPos.top - window.innerHeight >= 0) {
+    mobileCTA.classList.add('--active');
+  } else {
+    mobileCTA.classList.remove('--active');
+  }
 });

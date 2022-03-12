@@ -1,0 +1,141 @@
+@charset "UTF-8";
+
+@media (max-width: 768px) {
+  :root {
+    --dimension-global-padding: 20px;
+    --dimension-global-rounding: 24px;
+    --dimension-bottom: max(env(safe-area-inset-bottom), 16px);
+  }
+
+  /* Header */
+
+  header.header .header__navigation-container {
+    display: none;
+  }
+
+  header.header .header__menu-list {
+    display: none;
+  }
+
+  /* Intro */
+
+  section.intro .intro__background-container {
+    top: unset;
+    bottom: 80px;
+  }
+
+  section.intro .intro__title.--subtitle {
+    font-size: 20px;
+  }
+
+  section.intro .intro__title.--title {
+    margin-top: 4px;
+    font-size: 48px;
+  }
+
+  section.intro .intro__cta-button {
+    margin-top: 24px;
+  }
+
+  /* Bridge */
+
+  section.bridge .bridge__container {
+    padding: var(--dimension-global-padding);
+  }
+
+  section.bridge .bridge__background--blur {
+    justify-content: center;
+    min-height: 50vh;
+  }
+
+  section.bridge .bridge__title {
+    font-size: 40px;
+  }
+
+  section.bridge .bridge__detail {
+    font-size: 15px;
+  }
+
+  /* Products */
+
+  section.products .products__container {
+    padding: 0px var(--dimension-global-padding) 40px;
+  }
+
+  section.products .products__item {
+    margin-top: 24px;
+  }
+
+  section.products .products__item-container {
+    flex-direction: column !important;
+  }
+
+  section.products .products__item-info-subtitle {
+    margin-bottom: 4px;
+    font-size: 16px;
+  }
+
+  section.products .products__item-info-title {
+    margin-left: -4px;
+    font-size: 40px;
+  }
+
+  section.products .products__item-info-detail {
+    margin-top: 12px;
+    font-size: 14px;
+  }
+
+  /* Outro */
+
+  section.outro {
+    min-height: unset;
+  }
+
+  section.outro .outro__container {
+    padding: 80px var(--dimension-global-padding) 64px;
+  }
+
+  section.outro .outro__title {
+    font-size: 40px;
+  }
+
+  section.outro .outro__cta-button {
+    margin-top: 24px;
+  }
+
+  /* Footer */
+
+  footer.footer .footer__wrapper--link {
+    display: none;
+  }
+
+  /* CTA Button */
+  div.mobile-cta {
+    display: flex;
+    position: fixed;
+    top: 100vh;
+    left: 0vh;
+    right: 0vh;
+    padding-bottom: var(--dimension-bottom);
+    background: var(--color-primary);
+    transition: top 0.5s;
+  }
+
+  div.mobile-cta.--active {
+    top: calc(100vh - (56px + var(--dimension-bottom)));
+  }
+
+  div.mobile-cta .mobile-cta--button {
+    justify-content: center;
+    align-items: center;
+    height: 56px;
+    background-color: unset;
+  }
+
+  div.mobile-cta .mobile-cta--button-label {
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 150%;
+    color: #ffffff;
+  }
+}

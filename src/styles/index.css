@@ -3,5 +3,6 @@
 @import './reset.css';
 @import './initialize.css';
 @import './icon.css';
-@import './style.css';
 @import './component.css';
+@import './style.css';
+@import './style.mobile.css';

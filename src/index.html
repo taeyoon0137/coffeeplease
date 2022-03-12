@@ -43,11 +43,15 @@
   </header>
   <main>
     <section id="intro" class="intro">
-      <img class="intro__background" src="./assets/images/image_intro.webp" />
+      <div class="intro__background-container">
+        <div class="intro__background-wrapper">
+          <img class="intro__background" src="./assets/images/image_intro.webp" />
+        </div>
+      </div>
       <div class="intro__title-container">
         <h2 class="intro__title --subtitle">∅ Dripsso</h2>
         <h3 class="intro__title --title">극한을 마시다</h3>
-        <button class="intro__cta-button cta-button">
+        <button id="intro-cta" class="intro__cta-button cta-button">
           <span class="cta-button-label">
             구독하기
             <i class="cta-button-label--icon icon--arrow-angle-right"></i>
@@ -91,9 +95,6 @@
         </article>
         <article class="products__item --another-green">
           <a href="#" class="products__item-container">
-            <div class="products__item-image-container">
-              <img class="products__item-image" src="./assets/images/image_product_another_green.jpg" />
-            </div>
             <div class="products__item-info">
               <div class="products__item-info-container">
                 <h4 class="products__item-info-subtitle">어나더 그린</h4>
@@ -105,6 +106,9 @@
                   <i class="products__item-info-more--icon icon--arrow-angle-right"></i>
                 </div>
               </div>
+            </div>
+            <div class="products__item-image-container">
+              <img class="products__item-image" src="./assets/images/image_product_another_green.jpg" />
             </div>
           </a>
         </article>
@@ -128,9 +132,6 @@
         </article>
         <article class="products__item --lamp-black">
           <a href="#" class="products__item-container">
-            <div class="products__item-image-container">
-              <img class="products__item-image" src="./assets/images/image_product_lamp_black.jpg" />
-            </div>
             <div class="products__item-info">
               <div class="products__item-info-container">
                 <h4 class="products__item-info-subtitle">램프 블랙</h4>
@@ -142,6 +143,9 @@
                   <i class="products__item-info-more--icon icon--arrow-angle-right"></i>
                 </div>
               </div>
+            </div>
+            <div class="products__item-image-container">
+              <img class="products__item-image" src="./assets/images/image_product_lamp_black.jpg" />
             </div>
           </a>
         </article>
@@ -166,9 +170,6 @@
         </article>
         <article class="products__item --cobalt-violet">
           <a href="#" class="products__item-container">
-            <div class="products__item-image-container">
-              <img class="products__item-image" src="./assets/images/image_product_cobalt_violet.JPG" />
-            </div>
             <div class="products__item-info">
               <div class="products__item-info-container">
                 <h4 class="products__item-info-subtitle">코발트 바이올렛</h4>
@@ -181,6 +182,9 @@
                 </div>
               </div>
             </div>
+            <div class="products__item-image-container">
+              <img class="products__item-image" src="./assets/images/image_product_cobalt_violet.JPG" />
+            </div>
           </a>
         </article>
       </div>
@@ -188,7 +192,7 @@
     <section id="outro" class="outro">
       <div class="outro__container">
         <h4 class="outro__title">구독으로 만나는<br />신선한 수제 커피</h4>
-        <button class="outro__cta-button cta-button">
+        <button id="outro-cta" class="outro__cta-button cta-button">
           <span class="cta-button-label">
             구독하기
             <i class="cta-button-label--icon icon--arrow-angle-right"></i>
@@ -231,6 +235,13 @@
       </div>
     </div>
   </footer>
+  <div id="mobile-cta" class="mobile-cta">
+    <button class="mobile-cta--button">
+      <span class="mobile-cta--button-label">
+        커피 추천 받아보기
+      </span>
+    </button>
+  </div>
 </body>
 
 </html>
