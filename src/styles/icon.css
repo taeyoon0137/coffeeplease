@@ -1,0 +1,59 @@
+@charset "UTF-8";
+
+i.icon--arrow-angle-right {
+  position: relative;
+  display: block;
+  width: 24px;
+  height: 24px;
+}
+
+i.icon--arrow-angle-right::after,
+i.icon--arrow-angle-right::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  display: block;
+  width: 1.6px;
+  height: 8px;
+  border-radius: 1px;
+  background-color: #ffffff;
+}
+
+i.icon--arrow-angle-right::after {
+  top: calc(50% + 2.5px);
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+i.icon--arrow-angle-right::before {
+  top: calc(50% - 2.5px);
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+i.icon--arrow-angle-bottom {
+  position: relative;
+  display: block;
+  width: 24px;
+  height: 24px;
+}
+
+i.icon--arrow-angle-bottom::after,
+i.icon--arrow-angle-bottom::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  display: block;
+  width: 6.6%;
+  height: 33.3%;
+  border-radius: 1px;
+  background-color: #ffffff;
+}
+
+i.icon--arrow-angle-bottom::after {
+  left: calc(50% + 10.4%);
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+i.icon--arrow-angle-bottom::before {
+  left: calc(50% - 10.4%);
+  transform: translate(-50%, -50%) rotate(-45deg);
+}

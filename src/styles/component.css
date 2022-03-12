@@ -1,0 +1,21 @@
+@charset "UTF-8";
+
+/* Button */
+.cta-button {
+  padding: 8px 20px;
+  border-radius: 40px;
+  color: #ffffff;
+  background-color: var(--color-primary);
+}
+
+.cta-button-label {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.cta-button-label--icon {
+  margin-right: -10px;
+}
