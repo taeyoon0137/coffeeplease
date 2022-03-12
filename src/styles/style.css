@@ -131,13 +131,14 @@ section.intro .intro__background-wrapper {
   height: 100%;
 }
 
-section.intro .intro__background-wrapper::after {
+section.intro .intro__background-wrapper::before {
   content: '';
   position: absolute;
-  right: 0;
-  top: 0px;
-  left: 0;
+  top: 0;
+  display: flex;
+  width: 100%;
   height: 160px;
+  z-index: 1;
   background: linear-gradient(to top, rgba(22, 20, 21, 0), rgba(22, 20, 21, 1), rgba(22, 20, 21, 1));
 }
 
@@ -187,9 +188,14 @@ section.intro .intro__cta-button {
   margin-top: 32px;
 }
 
+section.intro .intro__scroll-indicator-container {
+  width: 100%;
+  background: linear-gradient(to bottom, rgba(22, 20, 21, 0), rgb(22, 20, 21));
+}
+
 section.intro .intro__scroll-indicator {
   align-items: center;
-  margin-bottom: 16px;
+  padding-bottom: 16px;
   transition: opacity 0.5s;
 }
 
@@ -265,15 +271,6 @@ section.bridge {
   background-color: rgb(22, 20, 21);
 }
 
-section.bridge::after {
-  content: '';
-  position: absolute;
-  right: 0;
-  top: -56px;
-  left: 0;
-  height: 56px;
-  background: linear-gradient(to bottom, rgba(22, 20, 21, 0), rgb(22, 20, 21));
-}
 section.bridge .bridge__container {
   padding: 24px var(--dimension-global-padding);
   width: 100%;

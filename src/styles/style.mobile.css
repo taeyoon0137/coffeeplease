@@ -4,7 +4,7 @@
   :root {
     --dimension-global-padding: 20px;
     --dimension-global-rounding: 24px;
-    --dimension-bottom: max(env(safe-area-inset-bottom), 0px);
+    --dimension-bottom: max(env(safe-area-inset-bottom), 16px);
   }
 
   /* Header */
@@ -42,9 +42,9 @@
     transition: unset;
   }
 
-  section.intro .intro__scroll-indicator {
+  section.intro .intro__scroll-indicator-container {
     position: sticky;
-    bottom: 16px;
+    bottom: 0px;
   }
 
   /* Bridge */
@@ -129,11 +129,12 @@
   div.mobile-cta {
     display: flex;
     position: fixed;
-    left: 0vh;
-    right: 0vh;
-    bottom: calc(-56px - var(--dimension-bottom));
-    padding-bottom: var(--dimension-bottom);
-    background: var(--color-primary);
+    bottom: calc(-1 * (56px + 12px + var(--dimension-bottom)));
+    padding: 12px 16px var(--dimension-bottom);
+    width: 100%;
+    background: rgba(22, 20, 21, 0.56);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
     transition: bottom 0.5s;
   }
 
@@ -145,7 +146,8 @@
     justify-content: center;
     align-items: center;
     height: 56px;
-    background-color: unset;
+    border-radius: 16px;
+    background: var(--color-primary);
   }
 
   div.mobile-cta .mobile-cta--button-label {
