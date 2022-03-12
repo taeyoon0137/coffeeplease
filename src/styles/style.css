@@ -10,6 +10,7 @@
 body {
   color: #ffffff !important;
   background: rgb(22, 20, 21);
+  overflow-x: hidden;
 }
 
 /* 헤더 섹션 */
