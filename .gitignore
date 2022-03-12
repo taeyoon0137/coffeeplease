@@ -10,3 +10,5 @@
 #/.pnp.*
 
 .parcel-cache/
+
+.DS_Store
