@@ -263,7 +263,6 @@ section.intro .intro__scroll-indicator.--hidden {
 .--loaded section.intro .intro__title-container {
   opacity: 1;
   transform: translateY(0px);
-  transition: transform 1s, opacity 2s;
 }
 
 /* 브릿지 섹션 */

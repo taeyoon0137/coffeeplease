@@ -1,6 +1,9 @@
 // screen load logic
 window.onload = () => {
   document.getElementById('root').classList.add('--loaded');
+
+  const titleContainer = document.getElementsByClassName('intro__title-container')[0];
+  titleContainer.style.transition = 'transform ease-out 1s, opacity ease-out 2s';
 };
 
 // scroll event

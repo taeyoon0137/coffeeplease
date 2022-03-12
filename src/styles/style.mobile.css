@@ -4,7 +4,7 @@
   :root {
     --dimension-global-padding: 20px;
     --dimension-global-rounding: 24px;
-    --dimension-bottom: max(env(safe-area-inset-bottom), 16px);
+    --dimension-bottom: max(env(safe-area-inset-bottom), 0px);
   }
 
   /* Header */
